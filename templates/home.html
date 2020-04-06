@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <title>Goth GF Bot</title>
+  <head>
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="https://cdn.vox-cdn.com/thumbor/i-X-WuAHn04A-AwDwY2M8NkFLso=/1400x1400/filters:format(jpeg)/cdn.vox-cdn.com/uploads/chorus_asset/file/19272345/ss_e4fa88ae445e44067a545cf4ecc81af5560ad007.jpg"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <style>
+      body {
+        background-color: #000000;
+/*        display: flex;
+        justify-content: center;
+        align-items: center;*/
+      }
+
+      #chatbox {
+        margin-left: auto;
+        margin-right: auto;
+        width: 275px;
+        height: 162px;
+        position:absolute;
+        top: 17px; /*[wherever you want it]*/
+        left: 138px; /*[wherever you want it]*/
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      #userInput {
+        margin-left: auto;
+        margin-right: auto;
+        width: 274px;
+        height: 154px;
+        position:absolute;
+        top: 3px; /*[wherever you want it]*/
+        left:532px; /*[wherever you want it]*/
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      #textInput {
+        width: 90%;
+        border: none;
+        font-family: "Verdana";
+        font-size: 17px;
+        text-align: center; 
+        color: #9e8b8f;
+        background-color: transparent;
+      }
+      .userText {
+        color: white;
+        font-family: "Verdana";
+        font-size: 17px;
+        text-align: right;
+        line-height: 30px;
+      }
+
+      .userText span {
+        background-color: #808080;
+        padding: 10px;
+        border-radius: 2px;
+        margin: auto;
+      }
+      .botText {
+        color: white;
+        font-family: "Verdana";
+        font-size: 17px;
+        text-align: center;
+        margin: auto;
+        line-height: 30px;
+      }
+      .botText span {
+        padding: 10px;
+        border-radius: 2px;
+      }
+      .img-container{
+        display: table;
+      }
+
+    </style>
+  </head>
+  <body>
+
+      <div class= "img-container">
+        <img src="/static/msgmsg.png">
+        <div id="chatbox">
+        </div>
+        <div id="userInput">
+          <input id="textInput" type="text" name="msg" />
+        </div>
+      </div>
+
+
+  </body>
+  <script>
+        $(function() {
+          $("#textInput").focus();
+        });
+        function getBotResponse() {
+          var rawText = $("#textInput").val();
+          var userHtml = '<p class="userText"><span>' + rawText + "</span></p>";
+          $("#textInput").val("");
+          $("#chatbox").html(userHtml);
+          document
+            .getElementById("userInput")
+            .scrollIntoView({ block: "start", behavior: "smooth" });
+          $.get("/get", { msg: rawText }).done(function(data) {
+            var botHtml = '<p class="botText"><span>' + data + "</span></p>";
+            $("#chatbox").html(botHtml);
+            document
+              .getElementById("userInput")
+              .scrollIntoView({ block: "start", behavior: "smooth" });
+          });
+        }
+        $("#textInput").keypress(function(e) {
+          if (e.which == 13) {
+            getBotResponse();
+          }
+        });
+</script>
+</html>
